@@ -25,3 +25,21 @@ let alternate=document.querySelectorAll("li:nth-child(odd)");
 for(let i=0;i<alternate.length;i++) {
     alternate[i].style.background="green";
 }
+//let ancestor=document.querySelector("#items");
+//ncestor.parentNode.parentNode.style.background='yellow';
+let ancestor=document.querySelector("#items");
+//ancestor.parentNode.style.background='yellow';
+ancestor.firstElementChild.style.background="red";
+ancestor.lastElementChild.style.background="yellow";
+let relation=document.querySelector("#added");
+relation.nextElementSibling.style.background='red';
+let relative=document.querySelector("#items");
+relative.previousElementSibling.style.color='yellow';
+let newDiv=document.createElement("div");
+newDiv.id="addition";
+let newDivtext=document.createTextNode("Hello World");
+newDiv.appendChild(newDivtext);
+let container=document.querySelector('header.container');
+let h1=document.querySelector('header h1');
+container.insertBefore(newDiv,h1);
+
