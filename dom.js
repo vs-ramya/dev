@@ -7,7 +7,21 @@ let makeBold=document.getElementById("items");
 makeBold.style.fontWeight="bold";
 //let item3=document.getElementsByClassName("list-group-item");
 //item3[2].style.background="green";
-let item2=document.getElementsByTagName("li");
-for(let i=0;i<item2.length;i++) {
-item2[i].style.background="yellow";
+//let item2=document.getElementsByTagName("li");
+//for(let i=0;i<item2.length;i++) {
+//item2[i].style.background="yellow";
+//}
+
+//QUERY SELECTOR SELECTS ONLY ONE IF A SPECIFIED TAG HAS MORE THAN ONE OCCURANCE THAN THE FIRST ONE IS ONLY CHANGES 
+let itemTwo=document.querySelector('.list-group-item:nth-child(2)');
+itemTwo.style.background="green";
+//INORDER TO SELECT THE SECOND ONE USING QUERYSELECTOR IS NOT POSSIBLE THAT'S WHY WE USED NTH CHILD
+let itemThree=document.querySelector('.list-group-item:nth-child(3)');
+itemThree.style.display="none";
+
+let itemSecond=document.querySelectorAll(".list-group-item");
+itemSecond[1].style.color="green";
+let alternate=document.querySelectorAll("li:nth-child(odd)");
+for(let i=0;i<alternate.length;i++) {
+    alternate[i].style.background="green";
 }
