@@ -95,4 +95,8 @@ function removeItem(e){
   }
 }
 
-
+form.addEventListener('submit',onsubmit);
+function onsubmit(e) {
+  preventDefault(e);
+  Event.target.name.value;
+}

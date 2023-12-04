@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS For Beginners</title>
+  </head>
+  <body>
+    <form onsubmit="onsubmit(event)">
+      <div>
+        <label for="firstname">Name:</label>
+        <input type="text" id="firstname" name="Firstname" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="emailId" required />
+      </div><br>
+      <button type="submit">Submit</button>
+    </form>
+    <script>
+      function onsubmit(event) {
+        event.preventDefault();
+        let userName = event.target.Firstname.value;
+        let userEmail = event.target.emailId.value;
+        localStorage.setItem('Name', userName);
+        localStorage.setItem('Email', userEmail);
+      }
+    </script>
+  </body>
+</html>
+
