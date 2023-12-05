@@ -5,7 +5,7 @@
     <title>JS For Beginners</title>
   </head>
   <body>
-    <form onsubmit="onsubmit(event)">
+    <form onsubmit="submitted(event)">
       <div>
         <label for="firstname">Name:</label>
         <input type="text" id="firstname" name="Firstname" required />
@@ -17,12 +17,20 @@
       <button type="submit">Submit</button>
     </form>
     <script>
-      function onsubmit(event) {
+       
+      function submitted(event) {
         event.preventDefault();
         let userName = event.target.Firstname.value;
         let userEmail = event.target.emailId.value;
-        localStorage.setItem('Name', userName);
-        localStorage.setItem('Email', userEmail);
+        /*localStorage.setItem('Name', userName);
+        localStorage.setItem('Email', userEmail);*/
+        //CREATES A OBJECT  
+        let object={
+           userName,
+           userEmail,
+        }
+        //JSON INORDER TO MAKE THE OBJECT TO STRING
+        localStorage.setItem('userDetails',JSON.stringify(object));
       }
     </script>
   </body>
