@@ -15,6 +15,9 @@
         <input type="email" id="email" name="emailId" required />
       </div><br>
       <button type="submit">Submit</button>
+      <ol id="unordered">
+
+      </ol>
     </form>
     <script>
        
@@ -30,9 +33,17 @@
            userEmail,
         }
         //JSON INORDER TO MAKE THE OBJECT TO STRING
-        localStorage.setItem('userDetails',JSON.stringify(object));
-      }
+        localStorage.setItem(userName,JSON.stringify(object));
+      /*UserAction(object);
+       }
+       function UserAction(object) {*/
+         let parentEle=document.getElementById('unordered');
+         let childEle=document.createElement('li');
+         childEle.textContent=object.userName+' '+object.userEmail;
+         parentEle.appendChild(childEle);
+       }
+       
+       
     </script>
   </body>
 </html>
-
