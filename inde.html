@@ -16,13 +16,38 @@
       </div><br>
       <button type="submit">Submit</button>
       <ol id="unordered">
-
+       
       </ol>
     </form>
     <script>
+      //STORES INTO THE LOCAL STORAGE WHENEVER THE SUBMIT BUTTO IS BEING CLICKED
        
-      function submitted(event) {
+      /*function submitted(event) {
         event.preventDefault();
+        let userName = event.target.Firstname.value;
+        let userEmail = event.target.emailId.value;
+        /*localStorage.setItem('Name', userName);
+        localStorage.setItem('Email', userEmail);*/
+        //CREATES A OBJECT  
+       /* let object={
+           userName,
+           userEmail,
+        }
+        //JSON INORDER TO MAKE THE OBJECT TO STRING 
+        //localStorage.setItem("userdetails",JSON.stringify(object));
+        //USERNAME INORDER TO AVOID THE REPITATION OF KEYS BY PREVENTING BEING DELETED USERNAME IS GIVEN BECAUSE FOR EACH USER
+         localStorage.setItem(userName,JSON.stringify(object));
+         //CREATING A LIST OF THE EMAILS AND NAMES WHENEVER SUBMITTED
+         let parentEle=document.getElementById('unordered');
+         let childEle=document.createElement('li');
+         childEle.textContent=object.userName+' '+object.userEmail;
+         parentEle.appendChild(childEle);
+         let deleteButton = document.createElement('input');
+         deleteButton.type='button';
+         deleteButton.value='delete';
+         childEle.appendChild('deleteButton');*/
+        function submitted(event) {
+         event.preventDefault();
         let userName = event.target.Firstname.value;
         let userEmail = event.target.emailId.value;
         /*localStorage.setItem('Name', userName);
@@ -34,13 +59,16 @@
         }
         //JSON INORDER TO MAKE THE OBJECT TO STRING
         localStorage.setItem(userName,JSON.stringify(object));
-      /*UserAction(object);
-       }
-       function UserAction(object) {*/
-         let parentEle=document.getElementById('unordered');
+        let parentEle=document.getElementById('unordered');
          let childEle=document.createElement('li');
          childEle.textContent=object.userName+' '+object.userEmail;
          parentEle.appendChild(childEle);
+         let deleteButton = document.createElement('input');
+         deleteButton.type='button';
+         deleteButton.value='delete';
+         childEle.appendChild('deleteButton');
+        
+        
        }
        
        
