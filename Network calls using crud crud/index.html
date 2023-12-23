@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS For Beginners</title>
+  </head>
+  <body>
+    <form onsubmit="submitted(event)">
+      <div>
+        <label for="firstname">Name:</label>
+        <input type="text" id="firstname" name="Firstname" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="emailId" required />
+      </div><br>
+      <button type="submit">Submit</button>
+      <ol id="unordered">
+
+       
+      </ol>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+    <script>
+      
+        function submitted(event) {
+         event.preventDefault();
+        let userName = event.target.Firstname.value;
+        let userEmail = event.target.emailId.value;
+        /*localStorage.setItem('Name', userName);
+        localStorage.setItem('Email', userEmail);*/
+        //CREATES A OBJECT  
+        let object={
+           userName,
+           userEmail,
+        }
+        //POSTING THE OBJECT THATS WHY PASSING OBJECT AT THE END
+        axios.post('https://crudcrud.com/api/be95350197f841f08819ae451e2fb4d4/userdata',object).then((response) =>{
+          //console.log(response.data);
+          console.log(response);
+            
+            
+        })
+        .catch((err) => {
+          //THROWS ERROR INCASE SOMETHING WENT WRONG WITH NETWORK CALLss
+          document.body.innerHTML=document.body.innerHTML="<h4>Something went wrong</h4>"  
+          console.log(err);
+            
+        })
+        
+        //JSON INORDER TO MAKE THE OBJECT TO STRING
+        //localStorage.setItem(userName,JSON.stringify(object));
+        let parentEle = document.getElementById('unordered');
+        let childEle = document.createElement('li');
+        childEle.textContent = object.userName + ' ' + object.userEmail;
+
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = 'delete';
+        deleteButton.onclick = function () {
+          parentEle.removeChild(childEle);
+        };
+
+        childEle.appendChild(deleteButton);
+        parentEle.appendChild(childEle);
+        
+       }
+       
+       
+    </script>
+  </body>
+</html>
