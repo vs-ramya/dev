@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Task 12</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+ <form onsubmit="saveToLocalStorage(event)">
+    
+    <label>Name</label>
+    <input type="text" name="username" id="usernameid" required/>
+    <label>Email</label>
+    <input type="email" name="emailId" id="emailid" required/>
+    <label>Phone Number</label>
+    <input type="tel" name="phonenumber" id="phonenumberid"/>
+    <button>Submit</button>
+ </form>
+
+
+ <ul id="listofitems"></ul>
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+
+
+
+
+function saveToLocalStorage(event)
+{
+event.preventDefault();
+const name= event.target.username.value;
+const email = event.target.emailId.value;
+const phonenumber = event.target.phonenumber.value;
+
+const obj ={name,email,phonenumber};
+
+
+
+
+ 
+
+
+axios.post('https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata',obj)
+.then((response)=>{
+   showuseronscreen(response.data)
+    console.log(response);
+}).catch((err)=>{
+// ///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+})
+// localStorage.setItem(obj.email,JSON.stringify(obj));
+}
+
+
+
+
+
+
+window.addEventListener("DOMContentLoaded",() => {
+    axios.get('https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata')
+.then((res) =>{
+    console.log(res.data);
+    // data is in the format of array
+
+    // for(let key of res.data)
+    // {
+    //     showuseronscreen(key)
+    // }
+
+    for(i=0;i<res.data.length;i++)
+    {
+        showuseronscreen(res.data[i])
+    }
+})
+.catch((err)=>{
+///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+               })
+})
+
+
+
+
+
+
+
+
+function showuseronscreen(user)
+{
+    let parentNode=document.getElementById('listofitems');
+    const childNode=`<li id=${user._id}>${user.name}-${user.email}-${user.phonenumber}
+                        <button onclick=deleteUser('${user._id}')>Delete User</button>
+                        <button onclick=editUserDetail('${user.email}','${user.name}','${user.phonenumber}','${user._id}')>Edit User</button>`
+
+    parentNode.innerHTML=parentNode.innerHTML+childNode; 
+
+}
+
+
+
+
+
+
+function editUserDetail(emailid,name,phonenumber,userId)
+{
+    document.getElementById('usernameid').value=name; 
+       document.getElementById('emailid').value=emailid;
+       document.getElementById('phonenumberid').value=phonenumber;
+
+       deleteUser(userId);
+
+}
+
+
+
+
+function deleteUser(userId)
+{
+    axios.delete(`https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata/${userId}`)
+    .then((response)=>{
+        removeUserfromScreen(userId)
+    }).catch((err)=>{
+///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+               })
+
+}
+
+function removeUserfromScreen(userId)
+{
+     let parent=document.getElementById('listofitems');
+    const childNodeDeleted=document.getElementById(userId);
+
+    parent.removeChild(childNodeDeleted)
+
+}
+
+
+
+
+    </script>
+</body>
+</html>
