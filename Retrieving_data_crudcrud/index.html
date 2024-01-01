@@ -42,7 +42,7 @@ const obj ={name,email};
 
 
 
-axios.post('https://crudcrud.com/api/437f00fbe45048c49f6609a54e60408e/retrieve',obj)
+axios.post('https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata',obj)
 .then((response)=>{
    showuseronscreen(response.data)
     console.log(response);
@@ -54,7 +54,7 @@ axios.post('https://crudcrud.com/api/437f00fbe45048c49f6609a54e60408e/retrieve',
 // localStorage.setItem(obj.email,JSON.stringify(obj));
 }
 window.addEventListener("DOMContentLoaded",() => {
-    axios.get('https://crudcrud.com/api/437f00fbe45048c49f6609a54e60408e/retrieve')
+    axios.get('https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata')
 .then((res) =>{
     console.log(res.data);
     // data is in the format of array
@@ -113,19 +113,8 @@ var edit=document.createElement('button');
         localStorage.removeItem(obj.email);
        document.getElementById('usernameid').value=obj.name;
        document.getElementById('emailid').value=obj.email;
-      
-
-
-
-
 
   }
-     
-
-
-
-   
-   
     li.appendChild(inputEdit);
     li.appendChild(input);
     parent.appendChild(li);

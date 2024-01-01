@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest API project</title>
+</head>
+<body>
+  <form id="productForm" onsubmit="addProduct(event)">
+    <label for="selling_price">Selling Price:</label>
+    <input type="number" name="Price" id="Priceid">
+    <label for="product_name">Product Name:</label>
+    <input type="text" name="Product" id="Productid">
+    <label for="select_category">Select a category:</label>
+    <select name="Category">
+        <option>Skincare</option>
+        <option>Electronics</option>
+        <option>Food</option>
+    </select>
+    <button type="submit">Add Product</button>
+  </form>
+
+  <ul id="forskincare">
+    <h2>Products</h2>
+    <h3>Skincare</h3>
+  </ul>
+  <ul id="forelectronics">
+    <h3>Electronics</h3>
+  </ul>
+  <ul id="forfood">
+    <h3>Food</h3>
+  </ul>
+
+  <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+  <script>
+    function addProduct(event) {
+      event.preventDefault();
+
+      let cost = event.target.Price.value;
+      let brand = event.target.Product.value;
+      let section = event.target.Category.value;
+
+      const object = {
+        cost,
+        brand,
+        section,
+      };
+
+      axios.post('https://crudcrud.com/api/80bfee0793cf44ed92ecdd0612b9a9f3/SellingDetails', object)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        });
+
+      switch (section) {
+        case 'Skincare':
+          addProductToList(object, 'forskincare');
+          break;
+        case 'Electronics':
+          addProductToList(object, 'forelectronics');
+          break;
+        case 'Food':
+          addProductToList(object, 'forfood');
+          break;
+        default:
+          break;
+      }
+      window.addEventListener("DOMContentLoaded",() => {
+    axios.get('https://crudcrud.com/api/80bfee0793cf44ed92ecdd0612b9a9f3/SellingDetails')
+.then((res) =>{
+    console.log(res.data);
+
+    for(i=0;i<res.data.length;i++)
+    {
+        showuseronscreen(res.data[i])
+    }
+})
+.catch((err)=>{
+///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+               })
+})
+function showuseronscreen(user)
+{
+    let parentNode=document.getElementById('');
+    const childNode=`<li id=${user._id}>
+        ${user.cost}-${user.brand}-${user.section}
+        <button onclick=deleteUser('${user._id}')>Delete User</button>
+        </li>`
+
+    parentNode.innerHTML=parentNode.innerHTML+childNode; 
+
+}
+
+
+function deleteUser(userId)
+{
+    axios.delete(`https://crudcrud.com/api/4e713e7a781c4e7d9a65fad7c6f5836d/Retrievedata/${userId}`)
+    .then((response)=>{
+        removeUserfromScreen(userId)
+    }).catch((err)=>{
+///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+               })
+
+}
+
+function removeUserfromScreen(userId)
+{
+     let parent=document.getElementById('');
+    const childNodeDeleted=document.getElementById(userId);
+
+    parent.removeChild(childNodeDeleted)
+
+}
+}
+
+   
+  </script>
+</body>
+</html>
