@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest API project</title>
+</head>
+<body>
+  <form onsubmit="SellingDetails(event)">
+    <label for="selling_price">Selling Price:</label>
+    <input type="number" name="Price" id="Priceid">
+    <label for="product_name">Product Name:</label>
+    <input type="text" name="Product" id="Productid">
+    <label for="select_category">Select a category:</label>
+    <select name="Category">
+        <option>Skincare</option>
+        <option>Electronics</option>
+        <option>Food</option>
+    </select>
+    <button type="submit">Add Product</button>
+    </form>
+    <ul id="forskincare">
+        <h2>Products</h2>
+        <h3>Skincare</h3>
+       
+
+    </ul>
+    <ul id="forelectronics">
+        <h3>Electronics</h3>
+
+    </ul>
+    <ul id="forfood">
+        <h3>Food</h3>
+
+    </ul>
+    <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>  
+    <script>
+        function SellingDetails(event) {
+            event.preventDefault();
+            let cost=event.target.Price.value;
+            let brand=event.target.Product.value;
+            let section=event.target.Category.value;
+            const object={
+                cost,
+                brand,
+                section,
+            }
+            if(section=='Skincare') {
+            let parent=document.getElementById('forskincare');
+            let children=document.createElement('li');
+            children.textContent=object.cost+'-'+object.brand+'-'+object.section;
+            parent.appendChild(children);
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete Product';
+            deleteButton.addEventListener('click', function () {
+                parent.removeChild(children);
+            });
+            
+            children.appendChild(deleteButton);
+            }
+            else if(section=='Electronics'){
+                let parent=document.getElementById('forelectronics');
+            let children=document.createElement('li');
+            children.textContent=object.cost+'-'+object.brand+'-'+object.section;
+            parent.appendChild(children);
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete Product';
+            deleteButton.addEventListener('click', function () {
+                parent.removeChild(children);
+            });
+            
+            children.appendChild(deleteButton);
+
+            }
+            else{
+                let parent=document.getElementById('forfood');
+            let children=document.createElement('li');
+            children.textContent=object.cost+'-'+object.brand+'-'+object.section;
+            parent.appendChild(children);
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete Product';
+            deleteButton.addEventListener('click', function () {
+                parent.removeChild(children);
+            });
+            
+            children.appendChild(deleteButton);
+
+            }
+        axios.post('https://crudcrud.com/api/80bfee0793cf44ed92ecdd0612b9a9f3/SellingDetails', object)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        }); 
+
+           
+    window.addEventListener("DOMContentLoaded",() => {
+    axios.get('https://crudcrud.com/api/80bfee0793cf44ed92ecdd0612b9a9f3/SellingDetails')
+.then((res) =>{
+    console.log(res.data);
+
+   // for(i=0;i<res.data.length;i++)
+   // {
+        //showuseronscreen(res.data[i])
+   // }
+})
+.catch((err)=>{
+///if it error occured
+    document.body.innerHTML= document.body.innerHTML+"<h4>Something Went Wrong</h4>"
+    console.log(err)
+               })
+}) 
+function deleteUser(userId) {
+      axios.delete(`https://crudcrud.com/api/80bfee0793cf44ed92ecdd0612b9a9f3/SellingDetails/${userId}`)
+        .then(() => {
+          removeUserfromScreen(userId);
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        });
+    }
+
+    function removeUserfromScreen(userId) {
+      const elementToRemove = document.getElementById(userId);
+      if (elementToRemove) {
+        elementToRemove.parentNode.removeChild(elementToRemove);
+      }
+    } 
+           
+        }
+
+
+
+    </script>
+
+</body>
+</html>
