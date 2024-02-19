@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rest API project</title>
+</head>
+<body>
+  <form id="productForm" onsubmit="addProduct(event)">
+    <label for="selling_price">Selling Price:</label>
+    <input type="number" name="Price" id="Priceid">
+    <label for="product_name">Product Name:</label>
+    <input type="text" name="Product" id="Productid">
+    <label for="select_category">Select a category:</label>
+    <select name="Category">
+        <option>Skincare</option>
+        <option>Electronics</option>
+        <option>Food</option>
+    </select>
+    <button type="submit">Add Product</button>
+  </form>
+
+  <ul id="forskincare">
+    <h2>Products</h2>
+    <h3>Skincare</h3>
+  </ul>
+  <ul id="forelectronics">
+    <h3>Electronics</h3>
+  </ul>
+  <ul id="forfood">
+    <h3>Food</h3>
+  </ul>
+
+  <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+  <script>
+    function addProduct(event) {
+      event.preventDefault();
+
+      let cost = event.target.Price.value;
+      let brand = event.target.Product.value;
+      let section = event.target.Category.value;
+
+      const object = {
+        cost,
+        brand,
+        section,
+      };
+
+      axios.post('https://crudcrud.com/api/82b72bb7ee1c49b29fbd6d42ffd16fb2/SellingDetails', object)
+        .then((response) => {
+          console.log(response.data);
+          addProductToList(response.data);
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        });
+    }
+
+    function addProductToList(product) {
+      let parent;
+      switch (product.section) {
+        case 'Skincare':
+          parent = document.getElementById('forskincare');
+          break;
+        case 'Electronics':
+          parent = document.getElementById('forelectronics');
+          break;
+        case 'Food':
+          parent = document.getElementById('forfood');
+          break;
+        default:
+          break;
+      }
+
+      if (parent) {
+        //creating list
+        const listItem = document.createElement('li');
+        listItem.id = product._id;
+        listItem.textContent = `${product.cost} - ${product.brand} - ${product.section}`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete User';
+        deleteButton.onclick = function () {
+          deleteUser(product._id);
+        };
+
+        listItem.appendChild(deleteButton);
+        parent.appendChild(listItem);
+      }
+    }
+
+    function deleteUser(userId) {
+      axios.delete(`https://crudcrud.com/api/82b72bb7ee1c49b29fbd6d42ffd16fb2/SellingDetails/${userId}`)
+        .then(() => {
+          removeUserfromScreen(userId);
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        });
+    }
+
+    function removeUserfromScreen(userId) {
+      const elementToRemove = document.getElementById(userId);
+      if (elementToRemove) {
+        elementToRemove.parentNode.removeChild(elementToRemove);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () =>  {
+      axios.get('https://crudcrud.com/api/82b72bb7ee1c49b29fbd6d42ffd16fb2/SellingDetails')
+        .then((res) => {
+          console.log(res.data);
+          for (let i = 0; i < res.data.length; i++) {
+            addProductToList(res.data[i]);
+          }
+        })
+        .catch((err) => {
+          document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>";
+          console.log(err);
+        });
+    });
+  </script>
+</body>
+</html>
